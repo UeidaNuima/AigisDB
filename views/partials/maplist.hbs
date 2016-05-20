@@ -1,0 +1,28 @@
+<ul class="map-list">
+    {{#each mapTree}}
+            {{#if mapTree}}
+                <li class="map-list-item clearfix">
+                <div class="map-group-title" data-toggle="collapse" data-target="#{{name}}" aria-expanded="{{#if selected}}true{{else}}false{{/if}}" aria-controls="{{name}}">
+                    {{name}}
+                    <span class="glyphicon glyphicon-chevron-down pull-right" aria-hidden="true"></span>
+                </div>
+                <div class="map-group collapse{{#if selected}} in{{/if}}" id="{{name}}">
+                    {{! 递归}}
+                    {{> maplist}}
+                </div>
+                </li>
+            {{else}}
+                <li class="map-list-item map-chooser clearfix{{#if selected}} active{{/if}}">
+                <a href="?map={{name}}">
+                <div class="map-title">{{name}}</div>
+                {{#if karisuma}}
+                    <div class="map-karisuma">{{karisuma}}</div>
+                {{/if}}
+                {{#if sutamina}}
+                    <div class="map-sutamina">{{sutamina}}</div>
+                {{/if}}
+                </a>
+                </li>
+            {{/if}}
+    {{/each}}
+</ul>

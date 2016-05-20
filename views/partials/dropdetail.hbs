@@ -1,0 +1,197 @@
+<h1>{{map.name}}</h1>
+<hr>
+<div class="panel panel-default">
+    <div class="panel-body">
+        {{#each map.fullDrop}}
+            <span style="display:table-cell">
+                <img class="img-rounded img-responsive" width="100" class="img-responsive" src="/images/{{this}}.png">
+            </span>
+        {{/each}}
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body row">
+        <div class="col-xs-2">总周回数</div>
+        <div class="col-xs-4">{{map.times}}</div>
+        <div class="col-xs-2">投稿数</div>
+        <div class="col-xs-4">{{map.count}}</div>
+    </div>
+</div>
+<table class="table table-hover drop-table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>掉落</th>
+        <th>总周回数</th>
+        <th>单次判定回数</th>
+        <th>总判定回数</th>
+        <th>总掉落数</th>
+        <th>概率</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each map.drop}}
+        <tr data-toggle="collapse" href="#collapse{{@index}}" aria-expanded="false" aria-controls="collapse{{@index}}">
+            <td><img class="circle" src="/images/{{name}}.png" width=30></td>
+            <td>{{name}}</td>
+            <td>{{../map.times}}</td>
+            <td>{{judge}}</td>
+            <td>{{sumJudge}}</td>
+            <td>{{sumQuantity}}</td>
+            <td>{{dropRate}}%</td>
+        </tr>
+
+        <tr>
+            <td class="detail-container" colspan="7">
+                <div class="collapse panel detail-table" id="collapse{{@index}}">
+                <table class="table" >
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>总周回数</th>
+                            <th>总判定回数</th>
+                            <th>总掉落数</th>
+                            <th>概率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#each drop}}
+                        <tr>
+                            <td>{{thief}}</td>
+                            <td>{{times}}</td>
+                            <td>{{sumJudge}}</td>
+                            <td>{{sumQuantity}}</td>
+                            <td>{{dropRate}}%</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                </div>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<div class="float-action-group">
+    <div class="btn-group-sm">
+        <a class="btn btn-danger btn-fab btn-raised" data-toggle="modal" data-target="#addMultiModal"><i class="material-icons">view_module</i></a>
+        <a class="btn btn-danger btn-fab btn-raised" data-toggle="modal" data-target="#addOneModal"><i class="material-icons">stop</i></a>
+    </div>
+    <a class="btn btn-danger btn-fab btn-fab-main btn-raised">
+        <i class="material-icons">add</i>
+    </a>
+</div>
+
+<div class="modal fade" id="addOneModal" tabindex="-1" role="dialog" aria-labelledby="addOneModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/submit?map={{map.name}}&action=addone" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="addOneModalLabel">增加一条记录</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" id="times" name="times" type="hidden" value="1">
+                    {{#each map.drop}}
+                        <div class="form-group">
+                            <label class="control-label" for="single{{@index}}">{{name}}</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <img src="/images/{{name}}.png" width=30>
+                                </span>
+                                <select id="single{{@index}}" class="form-control" name="{{name}}">
+                                    {{#countDown judge}}
+                                        <option>{{it}}</option>
+                                    {{/countDown}}
+                                </select>
+                            </div>
+                        </div>
+                    {{/each}}
+                    {{#if map.thief}}
+                        <div class="form-group">
+                            <div class=" radio radio-primary">
+                                <label class="radio-inline">
+                                    <input type="radio" name="thief" id="thief0" value=0 checked> 无作死
+                                </label>
+                            </div>
+
+                            <div class=" radio radio-primary">
+                                <label class="radio-inline">
+                                    <input type="radio" name="thief" id="thief1" value=1> 非觉醒作死
+                                </label>
+                            </div>
+                            <div class=" radio radio-primary">
+                                <label class="radio-inline">
+                                    <input type="radio" name="thief" id="thief2" value=2> 觉醒作死
+                                </label>
+                            </div>
+                        </div>
+                    {{else}}
+                        <input type="hidden" name="thief" value="0">
+                    {{/if}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addMultiModal" tabindex="-1" role="dialog" aria-labelledby="addMultiModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/submit?map={{map.name}}&action=addmulti" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="addOneModalLabel">增加多条记录</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="times">周回数</label>
+                        <input class="form-control" id="times" name="times" type="number" required="required" min="1">
+                    </div>
+                    {{#each map.drop}}
+                        <div class="form-group label-floating">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <img src="/images/{{name}}.png" width=30>
+                                </span>
+                                <label class="control-label" for="multi{{@index}}">{{name}}</label>
+                                <input class="form-control" id="multi{{@index}}" name="{{name}}" type="number" required="required" min="0">
+                            </div>
+                        </div>
+                    {{/each}}
+                    {{#if map.thief}}
+                        <div class="form-group">
+                            <div class=" radio radio-primary">
+                                <label class="radio-inline">
+                                    <input type="radio" name="thief" id="thief0" value=0 checked> 无作死
+                                </label>
+                            </div>
+
+                            <div class=" radio radio-primary">
+                                <label class="radio-inline">
+                                    <input type="radio" name="thief" id="thief1" value=1> 非觉醒作死
+                                </label>
+                            </div>
+                            <div class=" radio radio-primary">
+                                <label class="radio-inline">
+                                    <input type="radio" name="thief" id="thief2" value=2> 觉醒作死
+                                </label>
+                            </div>
+                        </div>
+                    {{else}}
+                        <input type="hidden" name="thief" value="0">
+                    {{/if}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

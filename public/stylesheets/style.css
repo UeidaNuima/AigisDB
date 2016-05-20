@@ -1,0 +1,109 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.thick-block{
+    padding: 0;
+}
+
+.map-list {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.map-list li {
+    list-style: none;
+}
+
+.map-group-title, .map-title {
+    padding: 1em 1em;
+    font-weight: bold;
+}
+
+.map-list-item {
+    border-top:1px solid #d8d8d8;
+    cursor: pointer;
+}
+
+.map-karisuma, .map-sutamina{
+    padding:0  0.5em 0.5em 0.5em;
+}
+
+.map-karisuma {
+    float:left;
+}
+
+.map-karisuma:before {
+    content: "カリスマ";
+    display: inline;
+}
+
+.map-sutamina:before {
+    content: "スタミナ";
+    display: inline;
+}
+
+.map-sutamina {
+    float:right;
+}
+
+
+.map-group.collapse.in {
+    box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12);
+}
+
+.map-chooser.active, .map-chooser:hover {
+    border-left:3px solid #009688;
+}
+
+.map-chooser.active {
+    background: #eee;
+}
+
+
+.map-chooser a{
+    color: inherit;
+    text-decoration: none;
+}
+
+.drop-table tr{
+    cursor: pointer;
+}
+
+.float-action-group {
+    float: right;
+    position: relative;
+}
+.float-action-group .btn-group-sm {
+    position: absolute;
+    bottom: 70px;
+    right: 8px;
+}
+
+.float-action-group .btn-group-sm .btn {
+    display: block;
+    margin-top: 10px;
+    transition: all 0.2s ease-out;
+    transform: scale(0, 0);
+}
+
+
+.float-action-group.active .btn-group-sm .btn {
+    transform: scale(1, 1);
+}
+
+.detail-container {
+    padding:0!important;
+}
+
+.detail-table {
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    #mapList {
+        display: block!important;
+        height: inherit!important;
+    }
+}
