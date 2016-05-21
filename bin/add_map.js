@@ -1,32 +1,18 @@
 var MapModel = require('../models').Map;
 var mongoose = require('mongoose');
+var co = require('co');
+var fs = require('co-fs');
 
-var aMap = new MapModel({
-    path: ',ストーリーミッション,ジャングル,',
-    name: 'オークの勇士',
-    karisuma: 72,
-    sutamina: 0,
-    drop:[
-        {
-            name: '中忍ハヤテ',
-            judge: 1,
-            thief: false
-        },
-        {
-            name: '弓兵ウィルフレッド',
-            judge: 1,
-            thief: false
-        },
-        {
-            name: '密林の老練射手ガガ',
-            judge: 5,
-            thief: false
-        }
-    ],
-    fullDrop: ['中忍ハヤテ', '弓兵ウィルフレッド', '密林の老練射手ガガ', '密林の老練射手ガガ', '密林の老練射手ガガ', '密林の老練射手ガガ']
-});
+co(function *(){
+    try{
+        var json = JSON.parse(yield fs.readFile('bin/maps.json', 'utf-8'));
+        yield MapModel.create(json);
+    } catch(err){
+        console.error(err.message);
+    } finally {
+        yield mongoose.disconnect();
+    }
 
-aMap.save(function(err){
-    console.error(err);
-    mongoose.disconnect();
+}).catch(function(err){
+    console.log(err.stack);
 });
