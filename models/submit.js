@@ -7,6 +7,10 @@ var SubmitSchema = new Schema({
         default: 1,
         min: 1
     },
+    timeStamp: {
+        type:Number,
+        default: new Date().getTime()
+    },
     ip: String,
     map: {
         type: String,
