@@ -3,6 +3,9 @@ var MapModel = require('../models').Map;
 var SubmitModel = require('../models').Submit;
 var _ = require('lodash');
 var co = require('co');
+var MarkdownIt = require('markdown-it');
+var md = new MarkdownIt();
+var fs = require('co-fs');
 
 //TODO: 数据库异常处理
 //TODO: 从路由中拆查询与离运算逻辑
@@ -12,6 +15,7 @@ module.exports = function(app){
     app.get('/', function(req, res){
         co(function *(){
             var thisMap;
+            var about;
 
             //选择了图的情况
             if(req.query.map){
@@ -145,13 +149,20 @@ module.exports = function(app){
                     times: submitSum.times,
                     drop: dropSum
                 };
-            }
-
-            //没选图的情况
-            if(!thisMap)
+            } else {
+                //没选图的情况
                 thisMap = {
                     name:""
                 };
+
+            }
+
+            /*if(!thisMap){
+
+            }*/
+
+            about = md.render(yield fs.readFile('README.md', 'UTF-8'));
+
 
             var maps = yield MapModel.find();
             var mapTree = {};
@@ -184,7 +195,7 @@ module.exports = function(app){
             });
 
             //渲染之
-            res.render('index', { mapTree: mapTree, map: thisMap});
+            res.render('index', { mapTree: mapTree, map: thisMap, about: about});
         }).catch(function(err){
             console.log(err.stack);
         });
