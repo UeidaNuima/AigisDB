@@ -17,5 +17,8 @@
 - 掉落物效率统计
 - ~~其他物品落率统计(BUFF机太多, 放弃)~~
 
+## [Gayhub](https://github.com/moondropx/AigisDB)
+建议和bug可以直接给我发issue……
+
 ## Licence
 MIT
