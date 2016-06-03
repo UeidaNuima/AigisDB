@@ -1,4 +1,10 @@
-<h1>{{map.name}}</h1>
+<h1>
+    {{map.name}}
+    <span class="label label-success">{{map.karisuma}}</span>
+    {{#if map.sutamina}}
+        <span class="label label-info">{{map.sutamina}}</span>
+    {{/if}}
+</h1>
 <hr>
 <div class="panel panel-default">
     <div class="panel-body">

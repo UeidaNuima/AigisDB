@@ -201,7 +201,7 @@ module.exports = function(app){
             });
 
             //渲染之
-            res.render('index', { mapTree: mapTree, map: thisMap, about: about});
+            res.render('index', { mapTree: mapTree, map: thisMap, about: about, title: "AigisDB"});
         }).catch(function(err){
             console.log(err.stack);
         });
