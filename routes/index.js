@@ -86,6 +86,7 @@ module.exports = function(app){
 
                 //聚合掉落信息
                 var dropSum = [];
+                var meta = 0;
                 mapInfo.drop.forEach(function(drop1){
                     var aDrop = {
                         name: drop1.name,
@@ -129,7 +130,9 @@ module.exports = function(app){
                                 }
                                 sumDropRate += drop2.drop[t].times*(drop2.drop[t].sumQuantity/drop1.judge/drop2.drop[t].times - buff);
                             }
-                            aDrop.dropRate = ((sumDropRate/submitSum.times)*100).toFixed(2);
+                            sumDropRate = sumDropRate/submitSum.times;
+                            meta += drop1.meta*sumDropRate*drop1.judge;
+                            aDrop.dropRate = (sumDropRate*100).toFixed(2);
                         }
                     });
                     dropSum.push(aDrop);
@@ -147,6 +150,9 @@ module.exports = function(app){
                     fullDrop: mapInfo.fullDrop,
                     count: submitSum.count,
                     times: submitSum.times,
+                    meta: meta.toFixed(2),
+                    karisumaEfficiency: mapInfo.karisuma==0 ? 0 : (meta / mapInfo.karisuma).toFixed(2),
+                    sutaminaEfficiency: mapInfo.sutamina==0 ? 0 : (meta / mapInfo.sutamina).toFixed(2),
                     drop: dropSum
                 };
             } else {

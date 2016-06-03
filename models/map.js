@@ -10,6 +10,7 @@ var MapSchema = new Schema({
     drop: [{
         name: String,
         judge: Number,
+        meta: Number,
         thief: {
             type: Boolean,
             default:false

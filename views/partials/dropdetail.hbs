@@ -16,6 +16,18 @@
         <div class="col-xs-2">投稿数</div>
         <div class="col-xs-4">{{map.count}}</div>
     </div>
+    <div class="panel-footer clearfix">
+        <div class="col-xs-2">总平均效率</div>
+        <div class="col-xs-2">{{map.meta}}</div>
+        {{#if map.karisuma}}
+            <div class="col-xs-2">魅力效率</div>
+            <div class="col-xs-2">{{map.karisumaEfficiency}}</div>
+        {{/if}}
+        {{#if map.sutamina}}
+            <div class="col-xs-2">体力效率</div>
+            <div class="col-xs-2">{{map.sutaminaEfficiency}}</div>
+        {{/if}}
+    </div>
 </div>
 <table class="table table-hover drop-table">
     <thead>
