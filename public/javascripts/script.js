@@ -15,7 +15,7 @@ $('document').ready(function(){
     $('form').submit(function (e) {
         var form = $(this);
         var modal = $($(this).parentsUntil('.modal').parent()[0]);
-        $.snackbar({content: '请稍后……'})
+        $.snackbar({content: 'Loading...'});
 
         $.ajax({
             type: 'POST',
